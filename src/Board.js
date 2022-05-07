@@ -4,11 +4,16 @@ import "./Board.css";
 
 /** Game board of Lights out.
  *
+ * Intro to game: " 5 × 5 board of buttons, each of which can be lit
+or unlit."
+ * 
  * Properties:
  *
  * - nrows: number of rows of board
+ *    nrows = 5 => y (height)
  * - ncols: number of cols of board
- * - chanceLightStartsOn: float, chance any cell is lit at start of game
+ *    ncols = 5 => x (width)
+ * - chanceLightStartsOn: float, chance any cell is lit at start of game 50:50?
  *
  * State:
  *
@@ -27,47 +32,55 @@ import "./Board.css";
  *
  **/
 
-function Board({ nrows, ncols, chanceLightStartsOn }) {
-  const [board, setBoard] = useState(createBoard());
+function Board({ nrows = 5, ncols = 5, chanceLightStartsOn = 0.5 }) {
+    const [board, setBoard] = useState(createBoard());
 
-  /** create a board nrows high/ncols wide, each cell randomly lit or unlit */
-  function createBoard() {
-    let initialBoard = [];
-    // TODO: create array-of-arrays of true/false values
-    return initialBoard;
-  }
-
-  function hasWon() {
-    // TODO: check the board in state to determine whether the player has won.
-  }
-
-  function flipCellsAround(coord) {
-    setBoard(oldBoard => {
-      const [y, x] = coord.split("-").map(Number);
-
-      const flipCell = (y, x, boardCopy) => {
-        // if this coord is actually on board, flip it
-
-        if (x >= 0 && x < ncols && y >= 0 && y < nrows) {
-          boardCopy[y][x] = !boardCopy[y][x];
+    /** create a board nrows high/ncols wide, each cell randomly lit or unlit */
+    function createBoard() {
+        let initialBoard = [];
+        // DONE: create array-of-arrays of true/false values
+        for (let y = 0; y < nrows; y++) {
+            let row = [];
+            for (let x = 0; x < ncols; x++) {
+                row.push(Math.random() < chanceLightStartsOn);
+            }
+            initialBoard.push(row);
         }
-      };
+        return initialBoard;
+    }
 
-      // TODO: Make a (deep) copy of the oldBoard
+    function hasWon() {
+        // DONE: check the board in state to determine whether the player has won.
+        return useState.every(row => row.every(cell => !cell));
+    }
 
-      // TODO: in the copy, flip this cell and the cells around it
+    function flipCellsAround(coord) {
+        setBoard(oldBoard => {
+            const [y, x] = coord.split("-").map(Number);
 
-      // TODO: return the copy
-    });
-  }
+            const flipCell = (y, x, boardCopy) => {
+                // if this coord is actually on board, flip it
 
-  // if the game is won, just show a winning msg & render nothing else
+                if (x >= 0 && x < ncols && y >= 0 && y < nrows) {
+                    boardCopy[y][x] = !boardCopy[y][x];
+                }
+            };
 
-  // TODO
+            // TODO: Make a (deep) copy of the oldBoard
 
-  // make table board
+            // TODO: in the copy, flip this cell and the cells around it
 
-  // TODO
+            // TODO: return the copy
+        });
+    }
+
+    // if the game is won, just show a winning msg & render nothing else
+
+    // TODO
+
+    // make table board
+
+    // TODO
 }
 
 export default Board;
