@@ -67,10 +67,13 @@ function Board({ nrows = 5, ncols = 5, chanceLightStartsOn = 0.5 }) {
             };
 
             // TODO: Make a (deep) copy of the oldBoard
+            let copyBoard = oldBoard.map(row => Board[row]);
 
             // TODO: in the copy, flip this cell and the cells around it
 
-            // TODO: return the copy
+
+            // DONE: return the copy
+            return copyBoard;
         });
     }
 
