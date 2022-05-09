@@ -51,7 +51,7 @@ function Board({nrows=5, ncols=5, chanceLightStartsOn=0.5}) {
 
     function hasWon() {
         // DONE: check the board in state to determine whether the player has won.
-        return useState.every(row => row.every(cell => !cell));
+        return board.every(row => row.every(cell => !cell));
     }
 
     function flipCellsAround(coord) {
@@ -61,13 +61,13 @@ function Board({nrows=5, ncols=5, chanceLightStartsOn=0.5}) {
             const flipCell=(y,x,boardCopy) => {
                 // if this coord is actually on board, flip it
 
-                if(x>=0&&x<ncols&&y>=0&&y<nrows) {
+                if(x >= 0 && x <ncols && y >= 0 && y<nrows) {
                     boardCopy[y][x]=!boardCopy[y][x];
                 }
             };
 
             // DONE: Make a (deep) copy of the oldBoard
-            let boardCopy=oldBoard.map(row => Board[row]);
+            let boardCopy = oldBoard.map(row => [row]);
 
             // DONE: in the copy, flip this cell and the cells around it
             flipCell(y, x, boardCopy);
@@ -94,8 +94,8 @@ function Board({nrows=5, ncols=5, chanceLightStartsOn=0.5}) {
     // let {tBoard,row}=[];
     let tBoard = [];
     let row =[];
-    for(let y=0; y<nrows; y++) {
-        for(let x=0; x <ncols; x++) {
+    for(let y = 0; y <nrows; y++) {
+        for(let x = 0; x <ncols; x++) {
             let coord=`${y}-${x}`;
             row.push(
                 <Cell
