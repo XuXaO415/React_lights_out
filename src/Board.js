@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import Cell from "./Cell";
 import "./Board.css";
 
+
 /** Game board of Lights out.
  *
  * Intro to game: " 5 × 5 board of buttons, each of which can be lit
@@ -32,17 +33,17 @@ or unlit."
  *
  **/
 
-function Board({nrows=5, ncols=5, chanceLightStartsOn=0.5}) {
-    const [board,setBoard]=useState(createBoard());
+function Board({nrows, ncols, chanceLightStartsOn}) {
+    const [board, setBoard] = useState(createBoard());
 
     /** create a board nrows high/ncols wide, each cell randomly lit or unlit */
     function createBoard() {
         let initialBoard=[];
         // DONE: create array-of-arrays of true/false values
-        for(let y=0; y <nrows; y++) {
+        for(let y=0; y<nrows; y++) {
             let row=[];
-            for(let x=0; x <ncols; x++) {
-                row.push(Math.random() <chanceLightStartsOn);
+            for(let x=0; x<ncols; x++) {
+                row.push(Math.random() < chanceLightStartsOn);
             }
             initialBoard.push(row);
         }
@@ -61,20 +62,21 @@ function Board({nrows=5, ncols=5, chanceLightStartsOn=0.5}) {
             const flipCell=(y,x,boardCopy) => {
                 // if this coord is actually on board, flip it
 
-                if(x >= 0 && x <ncols && y >= 0 && y<nrows) {
-                    boardCopy[y][x]=!boardCopy[y][x];
+                if(x>=0&&x<ncols&&y>=0&&y<nrows) {
+                    boardCopy[y][x] = !boardCopy[y][x];
                 }
             };
 
             // DONE: Make a (deep) copy of the oldBoard
-            let boardCopy = oldBoard.map(row => [...row]);
+            let boardCopy=oldBoard.map(row => [...row]);
+        
 
             // DONE: in the copy, flip this cell and the cells around it
-            flipCell(y, x, boardCopy);
-            flipCell(y, x+1, boardCopy);
-            flipCell(y, x-1, boardCopy);
-            flipCell(y+1, x, boardCopy);
-            flipCell(y-1, x, boardCopy);
+            flipCell(y,x,boardCopy);
+            flipCell(y,x+1,boardCopy);
+            flipCell(y,x-1,boardCopy);
+            flipCell(y+1,x,boardCopy);
+            flipCell(y-1,x,boardCopy);
 
             // DONE: return the copy
             return boardCopy;
@@ -83,37 +85,48 @@ function Board({nrows=5, ncols=5, chanceLightStartsOn=0.5}) {
 
     // if the game is won, just show a winning msg & render nothing else
 
-    // TODO
+    // Done
     if(hasWon()) {
         return (
-            <div>You Won!</div>
+            <h1>You Won!</h1>
         );
     }
 
+
     // make table board
     // let {tBoard,row}=[];
-    let tBoard = [];
-    let row =[];
-    for(let y = 0; y <nrows; y++) {
-        for(let x = 0; x <ncols; x++) {
+
+    let tBoard=[];
+    let row=[];
+
+    for(let y=0; y<nrows; y++) {
+        for(let x=0; x<ncols; x++) {
             let coord=`${y}-${x}`;
-            row.push(
-                <Cell
-                    key={coord}
-                    isLit={board[y][x]}
-                    flipCellsAroundMe={() => flipCellsAround(coord)}
-                />
+            row.push(<
+                Cell key={coord}
+                isLit={board[y][x]}
+                flipCellsAroundMe={
+                    () => flipCellsAround(coord)
+                }
+            />
             );
         }
-        tBoard.push(<tr key={y}>{row}</tr>)
-    }
+        tBoard.push(<tr key={y} > {row} </tr>);
+            }
 
-    // TODO
-    return (
-        <table className="Board">
-        <tbody>{tBoard}</tbody>
-        </table>
-    );
+            // Done
+            return (
+            <table className="Board" >
+                <tbody>{tBoard}</tbody>
+            </table>
+            );
+        }
+
+
+Board.defaultProps = {
+    nrows: 5,
+    ncols:5,
+    chanceLightStartsOn:0.25
 }
 
 export default Board;
