@@ -67,7 +67,7 @@ function Board({nrows=5, ncols=5, chanceLightStartsOn=0.5}) {
             };
 
             // DONE: Make a (deep) copy of the oldBoard
-            let boardCopy = oldBoard.map(row => [row]);
+            let boardCopy = oldBoard.map(row => [...row]);
 
             // DONE: in the copy, flip this cell and the cells around it
             flipCell(y, x, boardCopy);
@@ -110,9 +110,9 @@ function Board({nrows=5, ncols=5, chanceLightStartsOn=0.5}) {
 
     // TODO
     return (
-        <div className="Board">
+        <table className="Board">
         <tbody>{tBoard}</tbody>
-        </div>
+        </table>
     );
 }
 
